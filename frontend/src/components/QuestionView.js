@@ -63,15 +63,16 @@ class QuestionView extends Component {
     return pageNumbers;
   }
 
-  getByCategory = (id) => {
+  getByCategory = (category_id) => {
     $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
+      url: `/categories/${category_id}/questions`, //TODO: update request URL
       type: 'GET',
       success: (result) => {
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,
-          currentCategory: result.current_category,
+          // categories: result.categories,
+          current_category: result.categories,
         });
         return;
       },
@@ -108,11 +109,11 @@ class QuestionView extends Component {
     });
   };
 
-  questionAction = (id) => (action) => {
+  questionAction = (question_id) => (action) => {
     if (action === 'DELETE') {
       if (window.confirm('are you sure you want to delete the question?')) {
         $.ajax({
-          url: `/questions/${id}`, //TODO: update request URL
+          url: `/questions/${question_id}`, //TODO: update request URL
           type: 'DELETE',
           success: (result) => {
             this.getQuestions();
